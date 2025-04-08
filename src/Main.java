@@ -1,18 +1,18 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
 public class Main {
     public static void main(String[] args) {
-        String searchString = "Gladis";
-        Semaphore semaphore = new Semaphore(10);
+        List<String> pesquisas = Arrays.asList("Gladis", "Pedro", "Maria", "João", "Faria", "Douglas", "Alice", "Lima", "josé", "Daniel", "Rodrigo", "Ronaldo", "Luis", "Lucas", "Bruno");
+        Semaphore semaphore = new Semaphore(5);
         List<Thread> threads = new ArrayList<>();
 
         long startTime = System.currentTimeMillis();
 
-        for (int i = 0; i < 10; i++) {
-            String path = "src/arquivosNomes/nomescompletos-0" + i + ".txt";
-            Thread t = new Worker(semaphore, path, searchString);
+        for (int i = 0; i < pesquisas.size(); i++) {
+            Thread t = new Worker(semaphore, pesquisas.get(i));
             t.start();
             threads.add(t);
         }

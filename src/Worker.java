@@ -6,12 +6,10 @@ import java.util.concurrent.Semaphore;
 
 public class Worker extends Thread {
     private final Semaphore semaphore;
-    private final String filePath;
     private String searchString;
 
-    public Worker(Semaphore semaphore, String filePath, String searchString) {
+    public Worker(Semaphore semaphore, String searchString) {
         this.semaphore = semaphore;
-        this.filePath = filePath;
         this.searchString = searchString;
     }
 
@@ -43,8 +41,9 @@ public class Worker extends Thread {
 //            System.out.println(filePath + " waiting for permit...");
             semaphore.acquire();
 //            System.out.println(filePath + " got permit.");
-
-            findName(filePath, searchString);
+            for (int i = 0; i < 10; i++) {
+                findName("src/arquivosNomes/nomescompletos-0" + i + ".txt", searchString);
+            }
 
 //            System.out.println(filePath + " releasing permit.");
             semaphore.release();
